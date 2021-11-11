@@ -34,7 +34,16 @@ class ABFile():
           self.Bfile.writeat(self.Afile.readat(None, 0), 0)
       else:
           self.Afile.writeat('SE',0)
-          
+    else:
+        try:
+            self.Afile = openfile(self.Afn,True)
+            self.Bfile = openfile(self.Bfn,True)
+            self.Bfile.writeat(self.Afile.readat(None, 0), 0)
+
+        except FileNotFoundError:
+            print("Backup file does not exist")
+            exit(1)
+
     self.AfileLock = createlock()
     self.BfileLock = createlock()
 
