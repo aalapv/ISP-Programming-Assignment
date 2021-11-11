@@ -49,7 +49,9 @@ class ABFile():
     return AfileContent
 
   def close(self):
+    self.AfileLock.acquire(True)
     file_content_A = self.Afile.readat(None, 0)
+    self.BfileLock.acquire(True)
     file_content_B = self.Bfile.readat(None, 0)
     file_valid_A = False
     file_valid_B = False
@@ -68,7 +70,9 @@ class ABFile():
     else:
         self.Afile.close()
         self.Bfile.close()
-        removefile(self.Bfn) 
+        removefile(self.Bfn)
+    self.AfileLock.release()
+    self.BfileLock.release()
 
 
 def ABopenfile(filename, create):
