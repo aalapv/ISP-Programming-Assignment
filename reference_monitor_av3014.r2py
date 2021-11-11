@@ -57,13 +57,12 @@ class ABFile():
         fileValidB = True
 
     if fileValidB:
+        self.AfileLock.acquire(True)
         self.Afile.writeat(fileContentB, 0)
-        self.Afile.close()
-        self.Bfile.close()
-    else:
-        self.Afile.close()
-        self.Bfile.close()
-    self.AfileLock.release()
+        self.AfileLock.release()
+    
+    self.Afile.close()
+    self.Bfile.close()
     self.BfileLock.release()
     removefile(self.Bfn)
 
