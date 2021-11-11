@@ -30,16 +30,23 @@ class ABFile():
       self.Afile = openfile(self.Afn,create)
       self.Bfile = openfile(self.Bfn,create)
       self.Afile.writeat('SE',0)
+    self.AfileLock = createlock()
+    self.BfileLock = createlock()
 
 
   def writeat(self,data,offset):
     
     # Write the requested data to the B file using the sandbox's writeat call
+    self.BfileLock.acquire(True)
     self.Bfile.writeat(data,offset)
-  
+    self.BfileLock.release()  
+
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
-    return self.Afile.readat(bytes,offset)
+    self.AfileLock.acquire(True)
+    AfileContent = self.Afile.readat(bytes,offset)
+    self.AfileLock.release()
+    return AfileContent
 
   def close(self):
     file_content_A = self.Afile.readat(None, 0)
