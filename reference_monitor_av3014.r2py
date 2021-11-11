@@ -49,31 +49,23 @@ class ABFile():
     return AfileContent
 
   def close(self):
-    self.AfileLock.acquire(True)
-    file_content_A = self.Afile.readat(None, 0)
     self.BfileLock.acquire(True)
-    file_content_B = self.Bfile.readat(None, 0)
-    file_valid_A = False
-    file_valid_B = False
+    fileContentB = self.Bfile.readat(None, 0)
+    fileValidB = False
 
-    if file_content_A[0] == 'S' and file_content_A[-1] == 'E':
-        file_valid_A = True
+    if fileContentB[0] == 'S' and fileContentB[-1] == 'E':
+        fileValidB = True
 
-    if file_content_B[0] == 'S' and file_content_B[-1] == 'E':
-        file_valid_B = True
-
-    if file_valid_A and file_valid_B:
-        self.Afile.writeat(file_content_B, 0)
+    if fileValidB:
+        self.Afile.writeat(fileContentB, 0)
         self.Afile.close()
         self.Bfile.close()
-        removefile(self.Bfn)
     else:
         self.Afile.close()
         self.Bfile.close()
-        removefile(self.Bfn)
     self.AfileLock.release()
     self.BfileLock.release()
-
+    removefile(self.Bfn)
 
 def ABopenfile(filename, create):
   return ABFile(filename,create)
