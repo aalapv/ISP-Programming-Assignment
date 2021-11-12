@@ -22,17 +22,20 @@ class ABFile():
   def __init__(self,filename,create):
     # globals
     mycontext['debug'] = False
-    fileValid = True
+    createNewFile = False
 
     # local (per object) reference to the underlying file
     self.Afn = filename+'.a'
     self.Bfn = filename+'.b'
 
+    if self.Afn not in listfiles():
+       createNewFile = True
+       
     # make the files and add 'SE' to the readat file...
     self.Afile = openfile(self.Afn,True)
     self.Bfile = openfile(self.Bfn,True)
 
-    if create:
+    if create and createNewFile:
         self.Afile.writeat('SE',0)
 
     self.Bfile.writeat(self.Afile.readat(None, 0), 0)
