@@ -1,3 +1,8 @@
+__author__ = "Aalap Valia"
+__netid__ = "av3014"
+__course__ = "CS-GY 6813"
+
+
 """
 This security layer inadequately handles A/B storage for files in RepyV2.
 
