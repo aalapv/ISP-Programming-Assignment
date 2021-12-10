@@ -25,7 +25,7 @@ myfile.writeat('invalid', 0)
 
 try:
  # Since file was not closed after invalid, the data should still be valid
- assert('SvalidE' == myfile.readat(7,0))
+ assert('SvalidE' == myfile.readat(None,0))
  # Close the file:
  myfile.close()
 except:
