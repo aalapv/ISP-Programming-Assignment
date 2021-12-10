@@ -10,7 +10,7 @@ if "testfile.txt.b" in listfiles():
 myfile=ABopenfile("testfile.txt",True)  #Create an AB file
 
 # Adding valid data to new file
-myfile.writeat('SE', 0)
+myfile.writeat('SvalidE', 0)
 
 # File close
 myfile.close()
@@ -19,8 +19,8 @@ myfile.close()
 myfile=ABopenfile("testfile.txt",True)
 
 try:
- # Empty/New File should have contents 'SE' satisfying the requirement
- assert('SE' == myfile.readat(None,0))
+ # Empty/New File should have valid
+ assert('SvalidE' == myfile.readat(None,0))
  # Close the file:
  myfile.close()
 except:
